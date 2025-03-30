@@ -139,7 +139,7 @@ export default function Home() {
         </div>
       </main>
       
-      <footer className="flex gap-4 flex-wrap items-center justify-center text-sm text-gray-600 -mt-32">
+      <footer className="flex gap-4 flex-wrap items-center justify-center text-sm text-gray-600 -mt-20">
         <a href="https://www.npmjs.com/package/tesseract.js/v/2.1.1">Made with Tesseract.js</a>
         <a href="https://zikkdev.vercel.app/">PWA App by zikkdev</a>
       </footer>
