@@ -83,7 +83,7 @@ export default function Home() {
         <p className="text-sm text-gray-600">Scan and extract text from images</p>
       </header>
       
-      <main className="flex flex-col gap-8 items-center w-full max-w-md -mt-10">
+      <main className="flex flex-col gap-8 items-center w-full max-w-md -mt-16">
         <div className="w-full">
           <input 
             type="file" 
@@ -139,7 +139,7 @@ export default function Home() {
         </div>
       </main>
       
-      <footer className="flex gap-4 flex-wrap items-center justify-center text-sm text-gray-600 -mt-5">
+      <footer className="flex gap-4 flex-wrap items-center justify-center text-sm text-gray-600 -mt-32">
         <a href="https://www.npmjs.com/package/tesseract.js/v/2.1.1">Made with Tesseract.js</a>
         <a href="https://zikkdev.vercel.app/">PWA App by zikkdev</a>
       </footer>
