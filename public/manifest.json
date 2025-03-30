@@ -1,0 +1,22 @@
+{
+  "name": "OCR Scanner App",
+  "short_name": "OCR App",
+  "description": "A Progressive Web App for OCR scanning using Tesseract.js",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "permissions": ["camera"],
+  "icons": [
+    {
+      "src": "/ocr-pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/ocr-pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 
