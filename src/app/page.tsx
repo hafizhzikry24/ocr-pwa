@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useRef } from "react"
 import { createWorker } from "tesseract.js"
 import Camera from "@/components/Camera"
+import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 
 export default function Home() {
   const [text, setText] = useState<string>("")
@@ -98,9 +99,24 @@ export default function Home() {
     setShowToast(true)
     setTimeout(() => setShowToast(false), 3000)
   }
+  
+  const handleTabChange = (tab: string) => {
+    // Reset image and text when changing tabs
+    if (tab !== activeTab) {
+      setActiveTab(tab)
+      setImageUrl(null)
+      setText("")
+      // Reset file input when changing tab
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
+      <ThemeSwitcher />
+      
       <div className="max-w-4xl mx-auto">
         <header className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-slate-500 mb-2">
@@ -124,7 +140,7 @@ export default function Home() {
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium"
                       : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   }`}
-                  onClick={() => setActiveTab("upload")}
+                  onClick={() => handleTabChange("upload")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +166,7 @@ export default function Home() {
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium"
                       : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   }`}
-                  onClick={() => setActiveTab("camera")}
+                  onClick={() => handleTabChange("camera")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

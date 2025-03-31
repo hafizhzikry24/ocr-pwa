@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="application-name" content="OCR Scanner App" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,7 +31,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
-        {children}
+        <ThemeProvider defaultTheme="system" storageKey="ocr-app-theme">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
