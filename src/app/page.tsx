@@ -113,6 +113,14 @@ export default function Home() {
     }
   }
 
+  const handleUploadClick = () => {
+    if (!imageUrl) {
+      fileInputRef.current?.click()
+    } else {
+      showToastNotification("Remove image first", "Please remove the current image before uploading a new one.", "error")
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
       <ThemeSwitcher />
@@ -197,46 +205,68 @@ export default function Home() {
                   onChange={handleImageUpload}
                   ref={fileInputRef}
                 />
-                <div
-                  className={`w-full border-2 border-dashed rounded-lg p-8 transition-all duration-200 ease-in-out
-                    flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10
-                    ${!imageUrl && activeTab === "upload" ? "h-64" : "h-auto"}
-                    ${imageUrl && activeTab === "upload" ? "border-blue-400 bg-blue-50 dark:bg-blue-900/10" : "border-gray-200 dark:border-gray-700"}`}
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  {!imageUrl && activeTab === "upload" ? (
-                    <>
+                {!imageUrl ? (
+                  <div
+                    className={`w-full border-2 border-dashed rounded-lg p-8 transition-all duration-200 ease-in-out
+                      flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10
+                      h-64 border-gray-200 dark:border-gray-700`}
+                    onClick={handleUploadClick}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-gray-400 dark:text-gray-500 mb-4"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p className="text-center text-gray-500 dark:text-gray-400">
+                      Click to upload an image or drag and drop
+                    </p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">Supports JPG, PNG, GIF</p>
+                  </div>
+                ) : (
+                  <div className="w-full border-2 border-blue-400 bg-blue-50 dark:bg-blue-900/10 border-dashed rounded-lg p-8 relative">
+                    <img
+                      src={imageUrl}
+                      alt="Uploaded image"
+                      className="w-full max-h-[400px] object-contain rounded-md"
+                    />
+                    <button
+                      className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-md transition-colors"
+                      onClick={() => {
+                        setImageUrl(null);
+                        setText("");
+                        if (fileInputRef.current) {
+                          fileInputRef.current.value = "";
+                        }
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="48"
-                        height="48"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="1.5"
+                        strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-gray-400 dark:text-gray-500 mb-4"
                       >
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
                       </svg>
-                      <p className="text-center text-gray-500 dark:text-gray-400">
-                        Click to upload an image or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">Supports JPG, PNG, GIF</p>
-                    </>
-                  ) : imageUrl && activeTab === "upload" ? (
-                    <div className="w-full">
-                      <img
-                        src={imageUrl || "/placeholder.svg"}
-                        alt="Uploaded image"
-                        className="w-full max-h-[400px] object-contain rounded-md"
-                      />
-                    </div>
-                  ) : null}
-                </div>
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 
@@ -265,12 +295,34 @@ export default function Home() {
                 </button>
 
                 {imageUrl && activeTab === "camera" && (
-                  <div className="w-full mt-4">
+                  <div className="w-full mt-4 relative">
                     <img
                       src={imageUrl || "/placeholder.svg"}
                       alt="Captured image"
                       className="w-full max-h-[400px] object-contain rounded-md border border-gray-200 dark:border-gray-700"
                     />
+                    <button
+                      className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-md transition-colors"
+                      onClick={() => {
+                        setImageUrl(null);
+                        setText("");
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
                   </div>
                 )}
               </div>
